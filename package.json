@@ -1,0 +1,20 @@
+{
+  "name": "thorin-transport-ws",
+  "author": "Stiudeo",
+  "version": "1.0.1",
+  "dependencies": {
+    "socket.io": "^1.4.6",
+    "socket.io-redis": "^1.0.0"
+  },
+  "description": "Thorin.js Websocket transport",
+  "main": "index.js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Stiudeo/Thorin-transport-ws"
+  },
+  "homepage": "http://thorinjs.com",
+  "bugs": {
+    "url": "https://github.com/Stiudeo/Thorin-transport-ws/issues"
+  }
+}
