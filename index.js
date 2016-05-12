@@ -73,6 +73,12 @@ module.exports = function init(thorin) {
       eventObj._fromIntent(intentObj);
       return this[app].emit(eventObj, fn);
     }
+    /*
+    * Proxy for sendEvent()
+    * */
+    sendEvent() {
+      return this.sendIntent.apply(this, arguments);
+    }
 
     /*
      * Sets up the directory structure of the project.
