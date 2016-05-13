@@ -51,6 +51,17 @@ dispatcher
   });
 
 /*
+* We can also listen for specific room joins
+* */
+dispatcher
+  .addAction('ws#room.join:roomName')
+  .use((intentObj, next) => {
+    const socketObj = intentObj.socket;
+    console.log('Socket wants to join roomName');
+    next();
+  });
+
+/*
 * Called when a socket wants to leave a room (socketObj.emit("room.leave", {roomName}, {payload})
 * */
 dispatcher
@@ -62,6 +73,17 @@ dispatcher
     next();
     // the app layer will automatically remove the socket from the room, or
     // you can manually call socketObj.leave(roomName)
+  });
+
+/*
+ * We can also listen for specific room joins
+ * */
+dispatcher
+  .addAction('ws#room.leave:roomName')
+  .use((intentObj, next) => {
+    const socketObj = intentObj.socket;
+    console.log('Socket wants to leave roomName');
+    next();
   });
 
 /*

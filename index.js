@@ -52,6 +52,7 @@ module.exports = function init(thorin) {
           store: null,          // the redis store to use as an adapter.
           channel: 'thorin:ws'  // the channel to use for pubsub
         },
+        authorization: null,  // if specified, override the default authorization of the http transport
         transport: 'http',
         actionName: 'dispatch', // the default action to listen to.
         options: {  // socket.io options
