@@ -59,6 +59,7 @@ module.exports = function init(thorin) {
           path: '/ws'
         }
       }, wsConfig);
+      thorin.config.set('transport.' + this.name, this[config]);
       this[app] = new SocketIoApp(this[config], this._log.bind(this));
     }
 
@@ -75,7 +76,7 @@ module.exports = function init(thorin) {
       return this[app].emit(eventObj, fn);
     }
     /*
-    * Proxy for sendEvent()
+    * Proxy for sendIntent()
     * */
     sendEvent() {
       return this.sendIntent.apply(this, arguments);
