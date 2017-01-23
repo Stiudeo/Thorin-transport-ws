@@ -1,7 +1,7 @@
 {
   "name": "thorin-transport-ws",
   "author": "UNLOQ Systems LTD",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "dependencies": {
     "route-parser": "0.0.5",
     "socket.io": "1.7.2",
