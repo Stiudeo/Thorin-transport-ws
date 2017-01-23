@@ -25,7 +25,9 @@ module.exports = function init(thorin) {
     app = Symbol();
 
   class ws extends thorin.Interface.Transport {
-    static publicName() { return "ws"; }
+    static publicName() {
+      return "ws";
+    }
 
     constructor() {
       super();
@@ -35,8 +37,9 @@ module.exports = function init(thorin) {
       this[config] = {};
       this[app] = null; // the socket.io app
     }
+
     get app() {
-      if(!this[app]) return null;
+      if (!this[app]) return null;
       return this[app];
     }
 
@@ -57,8 +60,12 @@ module.exports = function init(thorin) {
         actionName: 'dispatch', // the default action to listen to.
         options: {  // socket.io options
           path: '/ws'
+          // wsEngine: the websocket engine to use. IF specified, we will automatically look for it in thorin.root / node_modules/engine
         }
       }, wsConfig);
+      if (typeof this[config].options.wsEngine === 'string') {
+        this[config].options.wsEngine = path.normalize(thorin.root + '/node_modules/' + this[config].options.wsEngine);
+      }
       thorin.config.set('transport.' + this.name, this[config]);
       this[app] = new SocketIoApp(this[config], this._log.bind(this));
     }
@@ -67,7 +74,7 @@ module.exports = function init(thorin) {
      * Send an intent to a specific client.
      * */
     sendIntent(intentObj, fn) {
-      if(intentObj instanceof SocketEvent) {
+      if (intentObj instanceof SocketEvent) {
         return this[app].emit(intentObj, fn);
       }
       // If we get an intent, we have to wrap it into a SocketEvent.
@@ -75,9 +82,10 @@ module.exports = function init(thorin) {
       eventObj._fromIntent(intentObj);
       return this[app].emit(eventObj, fn);
     }
+
     /*
-    * Proxy for sendIntent()
-    * */
+     * Proxy for sendIntent()
+     * */
     sendEvent() {
       return this.sendIntent.apply(this, arguments);
     }
@@ -87,10 +95,11 @@ module.exports = function init(thorin) {
      * */
     setup(done) {
       const SETUP_DIRECTORIES = ['app/actions', 'app/middleware'];
-      for(let i=0; i < SETUP_DIRECTORIES.length; i++) {
+      for (let i = 0; i < SETUP_DIRECTORIES.length; i++) {
         try {
           thorin.util.fs.ensureDirSync(path.normalize(thorin.root + '/' + SETUP_DIRECTORIES[i]));
-        } catch(e) {}
+        } catch (e) {
+        }
       }
       done();
     }
@@ -100,7 +109,7 @@ module.exports = function init(thorin) {
      * */
     run(done) {
       const transportObj = thorin.transport(this[config].transport);
-      if(!transportObj) {
+      if (!transportObj) {
         thorin.logger().error('WS transport requires a HTTP Transport in its config.');
         return done(thorin.error('TRANSPORT.WS', 'Invalid HTTP Transport'));
       }
@@ -135,7 +144,7 @@ module.exports = function init(thorin) {
      * This will handle the transport logger.
      * */
     _log() {
-      if(this[config].debug === false) return;
+      if (this[config].debug === false) return;
       let logObj = thorin.logger(this.name);
       logObj.log.apply(logObj, arguments);
     }
