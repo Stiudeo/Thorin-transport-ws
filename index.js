@@ -29,9 +29,12 @@ module.exports = function init(thorin) {
       return "ws";
     }
 
-    constructor() {
+    constructor(thorin, name) {
       super();
       this.name = 'ws';
+      if(typeof name === 'string' && name) {
+        this.name = name;
+      }
       this.type = thorin.Interface.BI_DIRECTIONAL;
       this[running] = false;
       this[config] = {};
